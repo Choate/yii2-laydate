@@ -63,6 +63,8 @@ class LaydateInputWidget extends InputWidget
     public $markItems;
 
     public $trigger;
+    
+    public $defaultValue;
 
     public function init()
     {
@@ -95,22 +97,13 @@ class LaydateInputWidget extends InputWidget
             'calendar' => $this->calendar,
             'mark' => $this->markItems,
             'trigger' => $this->trigger,
-            'value' => $this->getValue(),
+            'value' => $this->defaultValue,
         ], function ($value) {
             return !is_null($value);
         }));
         $clientOptionsJson = Json::encode($clientOptions);
 
         $this->getView()->registerJs("laydate.render({$clientOptionsJson});");
-    }
-
-    protected function getValue()
-    {
-        if ($this->hasModel()) {
-            return $this->model->{$this->attribute};
-        } else {
-            return $this->value;
-        }
     }
 
     protected function getInputId()
